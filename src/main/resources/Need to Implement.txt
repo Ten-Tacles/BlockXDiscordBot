@@ -1,0 +1,3 @@
+- Tell users if their command is missing arguments, instead of throwing an exception
+- Tell users how to use my bot
+- Can't join a game as a player that doesn't exist
