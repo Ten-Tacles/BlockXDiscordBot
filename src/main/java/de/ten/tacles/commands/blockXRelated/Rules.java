@@ -89,7 +89,7 @@ public class Rules extends Command {
                 sendBrokenRules().get();
                 sendWallRules().get();
                 sendTeleporterRules().get();
-                sendBomvRules().get();
+                sendBombRules().get();
 
                 user.sendMessage("Now that you know the rules, use *createGame* to start a new game you can play with your friends!");
             }
@@ -142,7 +142,7 @@ public class Rules extends Command {
 
         public CompletableFuture<Message> sendBrokenRules()
         {
-            return user.sendMessage("I mentioned breaking a tile a few times, and here are these **Brocken Tiles**. \n" +
+            return user.sendMessage("I mentioned breaking a tile a few times, and here are these **Broken Tiles**. \n" +
                             "Breaking a tile will produce the first one in the list, though " +
                             "they all react the same way to your moves, namely **not at all**. You cannot take over a broken tile, or repair it.\n" +
                             "The two on the left will turn into the one to their right at the end of each turn (after moves are placed)" +
@@ -166,7 +166,7 @@ public class Rules extends Command {
                             "The teleporter themselves aren't affected by any moves placed on them, though.\n"
                     , files[5]);
         }
-        public CompletableFuture<Message> sendBomvRules()
+        public CompletableFuture<Message> sendBombRules()
         {
             return user.sendMessage("Lastly, we have **Bomb Tiles**. There are a few more variants with different colours.\n" +
                             "Bombs are associated with a tile type, from left to right: **Empty Tiles, Player Tiles, Broken Tiles**. " +
