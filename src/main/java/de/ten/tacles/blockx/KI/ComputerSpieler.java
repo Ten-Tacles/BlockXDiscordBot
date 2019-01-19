@@ -1313,7 +1313,7 @@ public class ComputerSpieler
 	 */
 	private Vector<Vector<Zuege>> findPossibleDirectPaths(int x, int y, int player, int maxDistance)
 	{
-		Vector<Vector<Zuege>> result = new Vector<Vector<Zuege>>();
+		Vector<Vector<Zuege>> result = new Vector<>();
 		if (heatmaps[player].getHeat0(x, y)== 1)
 		{
 			result.add(new Vector<Zuege>());

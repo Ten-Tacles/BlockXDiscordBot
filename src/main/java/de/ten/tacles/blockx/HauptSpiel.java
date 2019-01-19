@@ -522,13 +522,10 @@ public class HauptSpiel
                     }
                 }
             }
-        } 
-                        
-                        
+        }
         //Wenn es eine Void Bombe ist
         else if (bombenTyp == 2) 
         {
-            
             //Die Bombe geht hoch, ver�ndert dabei alle Felder um sie herum in leere Felder
             if (explosion)
             {
