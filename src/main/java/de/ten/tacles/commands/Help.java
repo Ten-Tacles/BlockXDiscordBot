@@ -43,11 +43,16 @@ public class Help extends Command {
             resultMessage.append("__GeneralCommands__\n");
             for (Command command: Command.generalCommands)
             {
-                resultMessage.append("_");
-                resultMessage.append(command.getName());
-                resultMessage.append(":_ ");
-                resultMessage.append(command.getDescription());
-                resultMessage.append("\n");
+                if (command.getClass().getSuperclass() != ServerSpecificCommand.class
+                        || channel.asServerChannel().isPresent()
+                        && ((ServerSpecificCommand)command).getServers().contains(channel.asServerChannel().get().getServer()))
+                {
+                    resultMessage.append("_");
+                    resultMessage.append(command.getName());
+                    resultMessage.append(":_ ");
+                    resultMessage.append(command.getDescription());
+                    resultMessage.append("\n");
+                }
             }
 
             resultMessage.append("__BlockXCommands__\n");
@@ -88,7 +93,7 @@ public class Help extends Command {
 
                 if (wantedCommand.getArguments().length > 0)
                 {
-                    resultMessage.append("\n Arguments: \n");
+                    resultMessage.append("\nArguments: \n");
 
                     for (String argument : wantedCommand.getArguments())
                     {

@@ -19,6 +19,7 @@ public class Main {
     public static final String prefix = "blx";
     public static String inviteLink;
     public static User owner;
+    public static Server testServer;
 
     private static DiscordApi api;
 
@@ -39,6 +40,13 @@ public class Main {
         api = new DiscordApiBuilder().setToken(token).login().join();
 
         api.updateActivity("Write blx help for info!");
+
+        for (Server server: api.getServers())
+        {
+            System.out.println(server.getName());
+            if (server.getName().equals("BlockX Testing Station"))
+                testServer = server;
+        }
 
         Command.registerCommands();
         for (Command command : Command.listOfCommands)
@@ -61,11 +69,10 @@ public class Main {
 
         System.out.println("My name is " + api.getYourself().getName());
 
-        for (Server server: api.getServers())
-        {
-            System.out.println(server.getName());
 
-        }
+
+        testServer.getChannelById(537938534703693837L).get().asServerTextChannel().get().sendMessage(
+                Main.testServer.getRolesByName("ActiveTesterRole").get(0).getMentionTag() + " I am awake and ready for playing!");
 
 
         // Print the invite url of your bot

@@ -10,7 +10,9 @@ import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.util.ArrayList;
 
-public abstract class Command implements MessageCreateListener {
+public abstract class Command implements MessageCreateListener
+{
+
 
     /**
      * A list of all commands this bot has
@@ -78,11 +80,18 @@ public abstract class Command implements MessageCreateListener {
         //Checking if this message is something I should care about
         //AKA It begins with prefix + method triggerword
         //OR It begins with a triggerword and is a private message
+        //OR It is a ServerSpecificCommand, and in the wrong server.
         {
             boolean shouldIgnore = true;
             for (String string : getTriggerWords()) {
                 if (message.startsWith(Main.prefix + " " + string) || (event.isPrivateMessage() && (message.startsWith(string))))
                     shouldIgnore = false;
+            }
+            if (this.getClass().getSuperclass() == ServerSpecificCommand.class)
+            {
+                if(!event.getServer().isPresent() || !((ServerSpecificCommand)this).getServers().contains(event.getServer().get())){
+                        shouldIgnore = true;
+                }
             }
             if (shouldIgnore)
                 return;
@@ -122,6 +131,10 @@ public abstract class Command implements MessageCreateListener {
         listOfCommands.add(new Help());
         generalCommands.add(listOfCommands.get(listOfCommands.size()-1));
 
+        //Register SetTesterRole Command
+        listOfCommands.add(new SetTesterRole());
+        generalCommands.add(listOfCommands.get(listOfCommands.size()-1));
+
         //Register Secret Santa Command
         listOfCommands.add(new SecretSanta());
         devCommands.add(listOfCommands.get(listOfCommands.size()-1));
@@ -129,7 +142,6 @@ public abstract class Command implements MessageCreateListener {
         //Register count Command
         listOfCommands.add(new CountMessages());
         devCommands.add(listOfCommands.get(listOfCommands.size()-1));
-
 
         //Register createGame Command
         listOfCommands.add(new Startgame());
