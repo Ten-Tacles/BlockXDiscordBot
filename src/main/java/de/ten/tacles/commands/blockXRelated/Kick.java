@@ -46,6 +46,12 @@ public class Kick extends Command {
             if (session == null)
                 throw new  NoGameFoundException();
 
+            if (session.getCreator() != user)
+            {
+                channel.sendMessage("You are not the creator of this game!");
+                return;
+            }
+
             //Freeing up a playerslot
             if (arguments[2].length() < 4)
             {

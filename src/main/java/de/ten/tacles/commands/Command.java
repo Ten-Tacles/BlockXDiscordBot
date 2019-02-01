@@ -155,8 +155,16 @@ public abstract class Command implements MessageCreateListener
         listOfCommands.add(new Register());
         blockXCommands.add(listOfCommands.get(listOfCommands.size()-1));
 
+        //Register Rules Command
+        listOfCommands.add(new Rules());
+        blockXCommands.add(listOfCommands.get(listOfCommands.size()-1));
+
         //Register Unregister Command
         listOfCommands.add(new Leave());
+        blockXCommands.add(listOfCommands.get(listOfCommands.size()-1));
+
+        //Register Unregister Command
+        listOfCommands.add(new Surrender());
         blockXCommands.add(listOfCommands.get(listOfCommands.size()-1));
 
         //Register Kick Command
@@ -179,9 +187,6 @@ public abstract class Command implements MessageCreateListener
         listOfCommands.add(new List());
         blockXCommands.add(listOfCommands.get(listOfCommands.size()-1));
 
-        //Register list Command
-        listOfCommands.add(new Rules());
-        blockXCommands.add(listOfCommands.get(listOfCommands.size()-1));
 
 
         // It's probably really bad if 2 commands have the same triggerword

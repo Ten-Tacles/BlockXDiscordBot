@@ -27,6 +27,7 @@ public class HauptSpiel
 
     private boolean[] spielerRaus;
     private boolean[] spielerGradeVerloren;
+    private boolean[] spielerGradeAufgegeben;
    
     public HauptSpiel(Spielfeld feldHelfer)
     {
@@ -47,14 +48,7 @@ public class HauptSpiel
         teleporterAktiviert = new boolean[9][spielerAnzahl];
         spielerRaus = new boolean[spielerAnzahl];
         spielerGradeVerloren = new boolean[spielerAnzahl];
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < spielerAnzahl; j++)
-            {
-                teleporterAktiviert[i][j] = false;
-            }
-        }
-
+        spielerGradeAufgegeben = new boolean[spielerAnzahl];
         spielerIsBot = new boolean[spielerAnzahl];
 
         for (int i = 0; i < spielerAnzahl; i++)
@@ -71,18 +65,17 @@ public class HauptSpiel
      *
      * Mögliche Return Strings:
      * OK/            = Der Zug wurde platziert.
+     * LOST/          = Der Spieler kann keine Züge mehr platzieren, da er verloren hat
      * NOMOVES/       = Der Spieler kann keine Züge mehr platzieren
      * NOPLACE/       = Der Spieler kann dort keinen Zug vergeben
      * NEWTURN/       = Die Runde wurde beendet, alle Züge wurden ausgeührt
-     * PLAYERLOST(X)/ = Der Spieler (X) Hat verloren
-     * VICTOR(X)/     = Der Spieler (X) hat gewonnen
      */
     public ArrayList<ReturnStrings> setzeZug(int XCoord, int YCoord, int player)
     {
         //Dieser Wert soll Kommunikation mit der View erlauben
         ArrayList<ReturnStrings> toReturn = new ArrayList<>();
 
-        if (zugAnzahlen[player-1] > 0 && !spielerIsBot[player-1] && PlatzierungMoeglich(XCoord, YCoord, player))
+        if ((zugAnzahlen[player-1] > 0 || (spielFeld.getTileType(XCoord,YCoord) == 2))&& !spielerIsBot[player-1] && PlatzierungMoeglich(XCoord, YCoord, player) && !spielerRaus[player-1])
         {
             Zuege neuerZug = new Zuege(player-1, XCoord, YCoord);
             planungen.get(player-1).add(neuerZug);
@@ -99,6 +92,8 @@ public class HauptSpiel
         }
 
         //Warum kann ein Zug nicht gesetzt werden?
+        else if (spielerRaus[player-1])
+            toReturn.add(ReturnStrings.LOST);
         else {
             if (zugAnzahlen[player - 1] <= 0)
                 toReturn.add(ReturnStrings.NOMOVES);
@@ -118,7 +113,7 @@ public class HauptSpiel
         int toReturn = 0;
         for (int i = 0; i < spielerAnzahl; i++)
         {
-            if (zugAnzahlen[i] > 0)
+            if (zugAnzahlen[i] > 0 && !spielerRaus[i])
                 toReturn++;
         }
 
@@ -141,9 +136,10 @@ public class HauptSpiel
         //Spieler die keine Kernfelder ber�hren, fliegen hier raus
         for (int i = 1; i <= spielerAnzahl; i++) {
             spielerGradeVerloren[i-1] = false;
-            if (ZaehleBlockierteKernFelder(i) == 0 && !spielerRaus[i-1] ) {
+            if (ZaehleBlockierteKernFelder(i) == 0 && !spielerRaus[i-1] || spielerGradeAufgegeben[i-1] ) {
                 spielerRaus[i - 1] = true;
                 spielerGradeVerloren[i-1] = true;
+                spielerGradeAufgegeben[i-1] = false;
                 toReturn.add(ReturnStrings.PLAYERLOST);
             }
         }
@@ -202,6 +198,12 @@ public class HauptSpiel
             }
         }
         
+    }
+
+    public void SurrenderPlayer(int player)
+    {
+        spielerRaus[player-1] = true;
+        spielerGradeAufgegeben[player-1] = true;
     }
 
 

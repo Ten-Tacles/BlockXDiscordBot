@@ -375,7 +375,6 @@ public class BlockXSession
             switch (returnValue)
             {
                 case NEWTURN:
-
                     useEmbed = true;
                     message = "A new round begins. \n".concat(message);
                     for (int i = 0; i < spiel.getSpielerAnzahl();i++)
@@ -385,14 +384,15 @@ public class BlockXSession
                             message = message.concat("Player " + (i+1) + " has " + spiel.getZugAnzahlen()[i] + " moves.\n");
                         }
                     }
-
-
                     break;
                 case NOPLACE:
                         System.out.println("Sending Can't Place There to channel:" + channel.getId());
                         message = message.concat("Player " + player + " can't place there!\n");
                     break;
                 case OK:
+                    break;
+                case LOST:
+                    message = message.concat("Player " + player + " can't place any moves, because they lost!\n");
                     break;
                 case NOMOVES:
                     System.out.println("Sending Has No Moves to channel:" + channel.getId());
@@ -404,7 +404,7 @@ public class BlockXSession
                     for (int i = 0; i < spiel.getSpielerAnzahl();i++)
                     {
                         if (spielerGradeVerloren[i])
-                        message = message.concat("Player " + player + " has lost!\n");
+                        message = message.concat("Player " + (i+1) + " has lost!\n");
                     }
 
                     break;
@@ -509,5 +509,27 @@ public class BlockXSession
 
         }
 
+    }
+
+    public void SurrenderPlayer(int position, User user, TextChannel channel)
+    {
+        if (!isPartOfTheGame(user))
+        {
+            channel.sendMessage("You are not part of this game!");
+        }
+        else if (!findPlayerByUser(user).hasPosition(position))
+        {
+            channel.sendMessage("You do not control that player!");
+        }
+        else
+        {
+            channel.sendMessage("That player is now marked as defeated at the start of the next turn.");
+            spiel.SurrenderPlayer(position);
+        }
+    }
+
+    public User getCreator()
+    {
+        return creator;
     }
 }

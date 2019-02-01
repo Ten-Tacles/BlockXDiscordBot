@@ -55,7 +55,8 @@ public class Player {
 
     public void removePosition(int position)
     {
-        positions.remove(position);
+
+        positions.remove((Object) position);
     }
 
 

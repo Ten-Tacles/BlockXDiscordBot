@@ -30,7 +30,7 @@ public class SetTesterRole extends ServerSpecificCommand {
 
     @Override
     public String getDescription() {
-        return "Gives or removes the activeTesterRole. All activeTesters will be notified when the bot comes online!\nUse responsibly. \nOnly available on the test server.";
+        return "Gives or removes the activeTesterRole. All activeTesters will be notified when the bot comes online!\n-Use responsibly. Only available on the test server.";
     }
 
     @Override
