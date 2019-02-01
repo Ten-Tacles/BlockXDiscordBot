@@ -46,7 +46,7 @@ public class Leave extends Command {
                 throw new  NoGameFoundException();
 
             if (arguments.length > 3) {
-                int player = Integer.parseInt(arguments[2]);
+                int player = session.findPositionByArgument(arguments[2]);
                 session.unregisterPlayer(user, player, channel);
             }
             else

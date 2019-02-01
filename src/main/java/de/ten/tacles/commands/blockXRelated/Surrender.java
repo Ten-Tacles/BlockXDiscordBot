@@ -52,7 +52,7 @@ public class Surrender extends Command {
             if (arguments.length < 2)
                 player = session.findPositionByUser(user);
             else
-                player = Integer.parseInt(arguments[1]);
+                player = session.findPositionByArgument(arguments[1]);
 
 
             session.SurrenderPlayer(player,user,channel);

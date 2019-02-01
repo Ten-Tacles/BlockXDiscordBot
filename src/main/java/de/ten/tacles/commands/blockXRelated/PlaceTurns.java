@@ -66,12 +66,7 @@ public class PlaceTurns extends Command {
 
             if (arguments.length > 3)
             {
-                try {
-                    position = Integer.parseInt(arguments[3]);
-                }catch (NumberFormatException exp)
-                {
-                    position = game.findPositionByColour(arguments[3]);
-                }
+                position = game.findPositionByArgument(arguments[3]);
             }
             else
                 position = game.findPositionByUser(user);

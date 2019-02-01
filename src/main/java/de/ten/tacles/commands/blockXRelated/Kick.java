@@ -53,33 +53,19 @@ public class Kick extends Command {
             }
 
             //Freeing up a playerslot
-            if (arguments[2].length() < 4)
-            {
-                try
-                {
-                    int player = Integer.parseInt(arguments[2]);
-                    session.freePlayer(player, channel);
-                }
-                catch (NumberFormatException e)
-                {
-                    if (session.findPositionByColour(arguments[2]) > 0)
-                        session.freePlayer(session.findPositionByColour(arguments[2]), channel);
-                    else
-                        throw new NoPlayerFoundException();
-                }
+            int player = session.findPositionByArgument(arguments[2]);
+            if (player > 0) {
+                session.freePlayer(player, channel);
                 return;
             }
-            System.out.println(arguments[2].substring(2,arguments[2].length()-2));
 
+            System.out.println(arguments[2].substring(2,arguments[2].length()-2));
+            //Finding a user and kicking them
             if (Main.getApi().getCachedUserById(arguments[2].substring(2,arguments[2].length()-1)).isPresent())
                 user = Main.getApi().getCachedUserById( arguments[2].substring(2,arguments[2].length()-1)).get();
             else
-            {
-                if (session.findPositionByColour(arguments[2]) > 0)
-                    session.freePlayer(session.findPositionByColour(arguments[2]), channel);
-                else
-                    throw new NoPlayerFoundException();
-            }
+                throw new NoPlayerFoundException();
+
 
             session.kickPlayer(user, channel);
         }catch (NoGameFoundException e) {

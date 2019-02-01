@@ -45,13 +45,7 @@ public class Register extends Command {
             if (session == null)
                 throw new  NoGameFoundException();
 
-            int position;
-            try {
-                position = Integer.parseInt(arguments[2]);
-            }catch (NumberFormatException exp)
-            {
-                position = session.findPositionByColour(arguments[2]);
-            }
+            int position = session.findPositionByArgument(arguments[2]);
             if (position == -1)
                 throw new NoPlayerFoundException();
 

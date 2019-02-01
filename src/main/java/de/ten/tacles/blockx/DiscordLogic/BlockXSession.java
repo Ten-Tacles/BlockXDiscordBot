@@ -351,6 +351,21 @@ public class BlockXSession
     }
 
 
+    public int findPositionByArgument(String argument)
+    {
+        int position;
+
+        try 
+        {
+            position = Integer.parseInt(argument);
+        }catch (NumberFormatException exp)
+        {
+           position = findPositionByColour(argument);
+        }
+
+        return position;
+    }
+
     public void registerMove(int x, int y, int player, User user, TextChannel channel)
     {
         if (!isPartOfTheGame(user))
