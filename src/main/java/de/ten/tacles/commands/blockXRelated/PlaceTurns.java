@@ -1,7 +1,6 @@
 package de.ten.tacles.commands.blockXRelated;
 
 
-import de.ten.tacles.Main;
 import de.ten.tacles.blockx.DiscordLogic.BlockXSession;
 import de.ten.tacles.commands.Command;
 import de.ten.tacles.commands.NotEnoughArgumentsException;

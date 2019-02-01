@@ -38,7 +38,7 @@ public class Help extends Command {
         if (arguments.length == 1)
         {
             StringBuilder resultMessage = new StringBuilder();
-            resultMessage.append("Here is a list of all my commands:\nWrite \"help COMMANDNDNAME\" " +
+            resultMessage.append("Here is a list of all my commands, use **blx** as the prefix.\nWrite \"help COMMANDNDNAME\" " +
                     "if you want too look at a specific command.\n\n");
             resultMessage.append("__GeneralCommands__\n");
             for (Command command: Command.generalCommands)
