@@ -78,22 +78,23 @@ public class Help extends Command {
             if (wantedCommand != null)
             {
                 StringBuilder resultMessage = new StringBuilder();
-                resultMessage.append(wantedCommand.getName());
+                resultMessage.append("__").append(wantedCommand.getName()).append("__");
                 resultMessage.append(":\n");
                 resultMessage.append(wantedCommand.getDescription());
-                resultMessage.append("\nTriggerwords:\n");
+                resultMessage.append("__").append("\nTriggerwords:\n").append("__\n*");
                 for (String trigger : wantedCommand.getTriggerWords())
                 {
                     resultMessage.append(trigger);
                     resultMessage.append(" - ");
                 }
+
                 //Delete the last " - "
-                resultMessage.delete(resultMessage.length()-3, resultMessage.length());
+                resultMessage.delete(resultMessage.length()-3, resultMessage.length()).append("*");
 
 
                 if (wantedCommand.getArguments().length > 0)
                 {
-                    resultMessage.append("\nArguments: \n");
+                    resultMessage.append("\n__Arguments:__ \n");
 
                     for (String argument : wantedCommand.getArguments())
                     {
